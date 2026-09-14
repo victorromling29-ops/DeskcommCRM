@@ -19,11 +19,11 @@ import { requireSupportWrite } from "@/lib/impersonate/support";
  *  3. **rate limit** — depois do gate: quem nem passou no papel não gasta o
  *     orçamento de quem passou.
  *  4. **tamanho (413)** — antes de ler os bytes.
- *  5. **`pareceSvg` (415)** — com a razão dita em português. SVG é o formato em
- *     que um designer entrega logo; a pessoa precisa ler "mande PNG ou JPG", não
- *     "tipo de mídia não suportado".
- *  6. **`farejarTipo` (415)** — a decisão de tipo sai dos BYTES. `file.type` não
- *     decide nada e entra só no `details`, para o log mostrar a mentira.
+ *  5. **`classificarLogo` (415)** — a decisão de tipo sai dos BYTES. PNG/JPEG
+ *     reconhecido vence metadado XMP/XML; só o arquivo sem assinatura válida é
+ *     examinado como possível SVG, para receber a razão certa em português.
+ *     `file.type` não decide nada e entra só no `details`, para o log mostrar a
+ *     mentira.
  *  7. **prefixo de fonte confiável** — `resolveActiveOrg` (cookie validado contra
  *     memberships), NUNCA do body.
  *  8. **lê o caminho antigo DO BANCO** — não do cliente.
@@ -70,7 +70,7 @@ import {
   urlPublicaDoLogo,
   baseDoStorage,
 } from "@/lib/branding/logo";
-import { extensaoDe, farejarTipo, pareceSvg, podeApagar } from "@/lib/branding/logo-arquivo";
+import { classificarLogo, extensaoDe, podeApagar } from "@/lib/branding/logo-arquivo";
 import { marcaDaOrganizacaoDeSettings } from "@/lib/branding/organizacao";
 import { logger } from "@/lib/logger";
 import { createAdminClient } from "@/lib/supabase/admin";
@@ -399,8 +399,9 @@ export async function POST(req: NextRequest): Promise<Response> {
   }
 
   const bytes = new Uint8Array(await file.arrayBuffer());
+  const classificacao = classificarLogo(bytes);
 
-  if (pareceSvg(bytes)) {
+  if (!classificacao.ok && classificacao.motivo === "svg") {
     return fail(
       "logo_svg_recusado",
       "SVG não é aceito como logo: ele pode executar código quando aberto direto do endereço da imagem. Exporte o mesmo arquivo em PNG (fundo transparente) ou JPG.",
@@ -409,8 +410,7 @@ export async function POST(req: NextRequest): Promise<Response> {
     );
   }
 
-  const tipo = farejarTipo(bytes);
-  if (!tipo) {
+  if (!classificacao.ok) {
     return fail("unsupported_media_type", "O logo precisa ser PNG ou JPG.", 415, {
       requestId,
       // O que o cliente DISSE que mandou entra aqui e em lugar nenhum da decisão:
@@ -419,6 +419,8 @@ export async function POST(req: NextRequest): Promise<Response> {
       details: { content_type_declarado: file.type || null },
     });
   }
+
+  const tipo = classificacao.tipo;
 
   const anterior = await caminhoGravado(ctx);
   const caminho = caminhoNovoDoLogo(ctx.prefixo, extensaoDe(tipo));

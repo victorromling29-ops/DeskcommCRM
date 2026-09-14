@@ -11,7 +11,13 @@ import {
   TAMANHO_MAXIMO_DO_LOGO,
   urlPublicaDoLogo,
 } from "@/lib/branding/logo";
-import { extensaoDe, farejarTipo, pareceSvg, podeApagar } from "@/lib/branding/logo-arquivo";
+import {
+  classificarLogo,
+  extensaoDe,
+  farejarTipo,
+  pareceSvg,
+  podeApagar,
+} from "@/lib/branding/logo-arquivo";
 
 /**
  * O QUE ENTRA NO BUCKET DE LOGOS, E O QUE PODE SER APAGADO DE DENTRO DELE.
@@ -24,8 +30,9 @@ import { extensaoDe, farejarTipo, pareceSvg, podeApagar } from "@/lib/branding/l
  *      o `Content-Type` escolhido por quem sobe. Um teste de rota não separaria
  *      as duas coisas; aqui a função recebe bytes e não tem como saber o que o
  *      cliente disse.
- *   2. **SVG é recusado ANTES do farejador**, para a pessoa receber a frase que
- *      explica o problema dela em vez de "tipo não suportado".
+ *   2. **A assinatura binária vence metadados textuais.** Só o arquivo que NÃO
+ *      é PNG/JPEG é examinado como possível SVG; isso mantém a mensagem clara
+ *      sem recusar PNG legítimo que carregue XMP/XML do programa de edição.
  *   3. **O prefixo é asseverado na hora de APAGAR.** É a propriedade cuja falha
  *      é destrutiva e silenciosa: sem ela, um admin de tenant grava como logo
  *      dele o `platform/...` que qualquer pessoa lê no HTML da tela de login e,
@@ -33,8 +40,8 @@ import { extensaoDe, farejarTipo, pareceSvg, podeApagar } from "@/lib/branding/l
  *
  * ── O que este arquivo NÃO cobre, declarado ──────────────────────────────────
  *
- * A ORDEM das verificações dentro da rota (tamanho antes de ler bytes, SVG antes
- * do farejador, gravar antes de apagar) não é medida aqui — testar N caminhos não
+ * A ORDEM das verificações dentro da rota (tamanho antes de ler bytes, classificar
+ * antes de gravar, gravar antes de apagar) não é medida aqui — testar N caminhos não
  * prova precedência. Ela vive em `tests/invariants/marca-logo.test.ts` (o lado do
  * banco) e em `tests/e2e/marca-logo.spec.ts` (o lado da tela).
  */
@@ -107,6 +114,31 @@ describe("pareceSvg — a recusa que tem frase própria", () => {
     const longo = bytesDe(`<!--${"x".repeat(2048)}--><svg/>`);
     expect(pareceSvg(longo)).toBe(false);
     expect(farejarTipo(longo)).toBeNull();
+  });
+});
+
+describe("classificarLogo — metadado XML não transforma PNG em SVG", () => {
+  it("aceita PNG legítimo mesmo quando os metadados iniciais mencionam SVG", () => {
+    const pngComXmp = new Uint8Array([
+      ...PNG,
+      ...bytesDe('<?xpacket?><metadata><svg xmlns="http://www.w3.org/2000/svg"/></metadata>'),
+    ]);
+
+    // A busca textual é propositalmente ampla e encontra a tag; a classificação
+    // final reconhece primeiro a assinatura PNG e não gera falso positivo.
+    expect(pareceSvg(pngComXmp)).toBe(true);
+    expect(classificarLogo(pngComXmp)).toEqual({ ok: true, tipo: "image/png" });
+  });
+
+  it("continua recusando SVG renomeado e separa formato desconhecido", () => {
+    expect(classificarLogo(bytesDe("<svg><script>alert(1)</script></svg>"))).toEqual({
+      ok: false,
+      motivo: "svg",
+    });
+    expect(classificarLogo(bytesDe("GIF89a"))).toEqual({
+      ok: false,
+      motivo: "tipo_nao_suportado",
+    });
   });
 });
 
