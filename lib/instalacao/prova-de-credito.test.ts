@@ -42,6 +42,31 @@ describe("montarRequisicaoDeProva", () => {
   it("provedor desconhecido não recebe 'ok' por omissão", () => {
     expect(montarRequisicaoDeProva("inventado", "k", "m")).toBeNull();
   });
+
+  it.each(["gpt-5.6-terra", "gpt-4o"])(
+    "OpenAI usa o limite atual de um token sem substituir o modelo %s",
+    (modelo) => {
+      const req = montarRequisicaoDeProva("openai", "k", modelo)!;
+      expect(req.url).toBe("https://api.openai.com/v1/chat/completions");
+      expect(req.body).toEqual({
+        model: modelo,
+        max_completion_tokens: 1,
+        messages: [{ role: "user", content: "oi" }],
+      });
+      expect(req.body).not.toHaveProperty("max_tokens");
+    },
+  );
+
+  it("preserva os limites próprios de Anthropic, OpenRouter e Google", () => {
+    for (const provider of ["anthropic", "openrouter"]) {
+      const req = montarRequisicaoDeProva(provider, "k", "m")!;
+      expect(req.body).toMatchObject({ max_tokens: 1 });
+      expect(req.body).not.toHaveProperty("max_completion_tokens");
+    }
+    expect(montarRequisicaoDeProva("google", "k", "m")!.body).toMatchObject({
+      generationConfig: { maxOutputTokens: 1 },
+    });
+  });
 });
 
 describe("classificarResposta", () => {
@@ -77,6 +102,29 @@ describe("classificarResposta", () => {
 });
 
 describe("provarSaldo", () => {
+  it("serializa o limite aceito pela OpenAI em uma única geração mínima", async () => {
+    const fetchImpl = vi.fn(async (_url: unknown, init?: RequestInit) => {
+      const body = JSON.parse(String(init?.body));
+      // Reproduz a rejeição mostrada no onboarding, sem chamar a API real.
+      return new Response("{}", {
+        status: "max_tokens" in body ? 400 : 200,
+      });
+    });
+    const r = await provarSaldo("openai", "chave-de-teste", "gpt-5.6-terra", {
+      fetchImpl: fetchImpl as typeof fetch,
+    });
+    expect(r).toEqual({ ok: true });
+    expect(fetchImpl).toHaveBeenCalledTimes(1);
+    const [url, init] = fetchImpl.mock.calls[0]!;
+    expect(url).toBe("https://api.openai.com/v1/chat/completions");
+    expect(init?.method).toBe("POST");
+    expect(JSON.parse(String(init?.body))).toEqual({
+      model: "gpt-5.6-terra",
+      max_completion_tokens: 1,
+      messages: [{ role: "user", content: "oi" }],
+    });
+  });
+
   it("faz UMA chamada e devolve ok quando o provedor aceita", async () => {
     const fetchImpl = vi.fn(async () => new Response("{}", { status: 200 }));
     const r = await provarSaldo("anthropic", "sk-x", "claude-sonnet-5", {
