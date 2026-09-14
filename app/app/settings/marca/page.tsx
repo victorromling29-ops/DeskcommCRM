@@ -27,8 +27,10 @@
  * tela não é segredo de ninguém — o `manager` sabe que a empresa tem marca, só
  * não é ele quem a troca. Mesma escolha de `settings/tenant/page.tsx`.
  */
+import Link from "next/link";
 import { redirect } from "next/navigation";
 
+import { Buildings, ShieldCheck } from "@/lib/ui/icons";
 import { requireAuth, resolveActiveOrg } from "@/lib/auth/server";
 import { ROLE_RANK } from "@/lib/auth/types";
 import { marcaDaInstalacao } from "@/lib/branding/instalacao";
@@ -67,12 +69,74 @@ export default async function MarcaDaOrganizacaoPage() {
 
   return (
     <div className="flex h-full flex-col gap-6 overflow-y-auto p-6">
-      <header>
-        <h1 className="text-2xl font-semibold tracking-tight">{traduzir("Marca", idioma)}</h1>
+      <header className="max-w-3xl">
+        <h1 className="text-2xl font-semibold tracking-tight">
+          {traduzir("Marca da organização", idioma)}
+        </h1>
         <p className="max-w-2xl text-sm text-muted-foreground">
-          {traduzir("O nome e a cor que a sua empresa mostra para quem trabalha aqui dentro.", idioma)}
+          {traduzir(
+            "Personalize a empresa selecionada sem alterar as demais organizações.",
+            idioma,
+          )}
         </p>
       </header>
+
+      <section
+        data-testid="escopo-da-marca"
+        aria-labelledby="titulo-escopo-da-marca"
+        className="max-w-3xl overflow-hidden rounded-sm border border-accent bg-accent-soft"
+      >
+        <div className="flex gap-4 p-5">
+          <div className="flex h-10 w-10 shrink-0 items-center justify-center rounded-sm bg-accent text-accent-foreground shadow-xs">
+            <Buildings size={22} weight="duotone" aria-hidden />
+          </div>
+          <div className="min-w-0 flex-1">
+            <p className="text-xs font-semibold tracking-[0.16em] text-accent uppercase">
+              {traduzir("Organização ativa", idioma)}
+            </p>
+            <div className="mt-1 flex flex-wrap items-center gap-2">
+              <h2 id="titulo-escopo-da-marca" className="text-lg font-semibold text-text">
+                {activeOrg.name}
+              </h2>
+              <span className="rounded-full border border-accent/30 bg-surface px-2.5 py-0.5 text-xs font-medium text-accent">
+                {traduzir("Somente esta organização", idioma)}
+              </span>
+            </div>
+            <p className="mt-2 text-sm leading-relaxed text-text-muted">
+              {traduzir(
+                "O nome, as cores e o logo abaixo serão aplicados somente a esta organização. A tela de entrada e as outras empresas não mudam.",
+                idioma,
+              )}
+            </p>
+            <p className="mt-1 text-xs text-text-muted">
+              {traduzir(
+                "Para personalizar outra empresa, troque a organização no seletor do topo antes de editar.",
+                idioma,
+              )}
+            </p>
+          </div>
+        </div>
+
+        {user.is_platform_admin && !user.support ? (
+          <div className="flex flex-col gap-3 border-t border-accent/20 bg-surface/70 px-5 py-3 sm:flex-row sm:items-center sm:justify-between">
+            <div className="flex items-center gap-2 text-sm text-text-muted">
+              <ShieldCheck size={18} className="shrink-0 text-accent" aria-hidden />
+              <span>
+                {traduzir(
+                  "Quer mudar o login e a marca padrão usada por todas as empresas?",
+                  idioma,
+                )}
+              </span>
+            </div>
+            <Link
+              href="/admin/marca"
+              className="shrink-0 text-sm font-semibold text-accent underline-offset-4 hover:underline focus-visible:rounded-sm focus-visible:ring-2 focus-visible:ring-accent focus-visible:outline-hidden"
+            >
+              {traduzir("Editar marca da plataforma", idioma)}
+            </Link>
+          </div>
+        ) : null}
+      </section>
 
       <FormularioDaMarcaDaOrganizacao
         gravada={{
