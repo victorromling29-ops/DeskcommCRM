@@ -1,6 +1,8 @@
 name: ci
 
 on:
+  # Permite validar a cópia mesmo quando eventos automáticos não disparam.
+  workflow_dispatch: {}
   pull_request:
   push:
     branches: [main]
