@@ -51,41 +51,103 @@ export default async function PublicLayout({ children }: { children: React.React
 
   return (
     <IdiomaProvider locale={locale}>
-      <div className="flex min-h-screen items-center justify-center bg-background p-6">
-        <div className="w-full max-w-sm space-y-6">
-          {marca.logoUrl ? (
-            <div className="flex justify-center">
-              {/*
-                <img> em vez de next/image pelo mesmo motivo da barra lateral: a URL
-                é de quem hospeda e o `next/image` exige allowlist de domínios
-                fechada em BUILD — a imagem pré-buildada do self-host recusaria o
-                domínio do operador. Altura fixa e largura livre para não distorcer
-                arte de proporção desconhecida.
+      <div className="allbusiness-auth-shell relative min-h-screen overflow-hidden bg-[#040914] text-white">
+        <div className="allbusiness-auth-grid" aria-hidden="true" />
+        <div className="allbusiness-auth-orb allbusiness-auth-orb-one" aria-hidden="true" />
+        <div className="allbusiness-auth-orb allbusiness-auth-orb-two" aria-hidden="true" />
 
-                O `alt` é o nome DESTA resolução (`marca.nome`), e não o de
-                `branding()`: é a legenda da imagem que está ali, e nomeá-la com a
-                marca de outra fonte descreveria uma marca que não é a do logo.
+        <main className="relative z-10 mx-auto grid min-h-screen w-full max-w-[1440px] lg:grid-cols-[1.12fr_0.88fr]">
+          <section
+            className="allbusiness-auth-intro hidden flex-col justify-between px-12 py-12 lg:flex xl:px-20 xl:py-16"
+            aria-label={`Sobre ${marca.nome}`}
+          >
+            <div className="allbusiness-auth-enter allbusiness-auth-enter-one">
+              {marca.logoUrl ? (
+                <>
+                  {/* eslint-disable-next-line @next/next/no-img-element */}
+                  <img
+                    data-testid="logo-da-fachada"
+                    src={marca.logoUrl}
+                    alt={marca.nome}
+                    className="h-24 w-auto max-w-[18rem] object-contain object-left"
+                  />
+                </>
+              ) : marcaEhADoProduto({ name: marca.nome, logoUrl: null }) ? (
+                <LogotipoDoProduto nome={marca.nome} className="h-14 w-auto" />
+              ) : (
+                <p className="text-2xl font-bold tracking-tight">{marca.nome}</p>
+              )}
+            </div>
 
-                O `data-testid` é lido por `tests/e2e/marca-logo.spec.ts`, que prova
-                que o logo da EMPRESA não vaza para cá. Sem ele a spec caía na
-                "primeira <img> da página", e uma asserção de negação com seletor
-                largo passa sozinha assim que outra imagem entra na tela.
-              */}
-              {/* eslint-disable-next-line @next/next/no-img-element */}
-              <img
-                data-testid="logo-da-fachada"
-                src={marca.logoUrl}
-                alt={marca.nome}
-                className="h-10 w-auto max-w-[12rem] object-contain"
-              />
+            <div className="max-w-2xl pb-10">
+              <p className="allbusiness-auth-kicker allbusiness-auth-enter allbusiness-auth-enter-two font-mono text-xs tracking-[0.24em] text-sky-300 uppercase">
+                Atendimento que vira oportunidade
+              </p>
+              <h2 className="allbusiness-auth-enter allbusiness-auth-enter-three mt-5 max-w-xl text-5xl leading-[1.04] font-bold tracking-[-0.045em] text-white xl:text-6xl">
+                Cada conversa já nasce com um próximo passo.
+              </h2>
+              <p className="allbusiness-auth-enter allbusiness-auth-enter-four mt-6 max-w-lg text-lg leading-8 text-slate-300">
+                WhatsApp, vendas e inteligência artificial trabalhando no mesmo fluxo — com contexto
+                para o time e nenhuma oportunidade esquecida.
+              </p>
+
+              <ol
+                className="allbusiness-auth-flow allbusiness-auth-enter allbusiness-auth-enter-five relative mt-12 grid grid-cols-3 gap-3"
+                aria-label="Fluxo de atendimento da plataforma"
+              >
+                {[
+                  ["01", "Conversa", "Tudo chega organizado"],
+                  ["02", "Contexto", "A IA entende e registra"],
+                  ["03", "Próximo passo", "O time sabe o que fazer"],
+                ].map(([numero, titulo, detalhe]) => (
+                  <li key={numero} className="allbusiness-auth-flow-step relative pt-5">
+                    <span className="font-mono text-[10px] tracking-[0.2em] text-sky-400">
+                      {numero}
+                    </span>
+                    <strong className="mt-2 block text-sm font-bold text-white">{titulo}</strong>
+                    <span className="mt-1 block text-xs leading-5 text-slate-400">{detalhe}</span>
+                  </li>
+                ))}
+                <span className="allbusiness-auth-flow-pulse" aria-hidden="true" />
+              </ol>
             </div>
-          ) : marcaEhADoProduto({ name: marca.nome, logoUrl: null }) ? (
-            <div className="flex justify-center">
-              <LogotipoDoProduto nome={marca.nome} className="h-12 w-auto" />
+
+            <p className="allbusiness-auth-enter allbusiness-auth-enter-five font-mono text-[11px] tracking-[0.18em] text-slate-500 uppercase">
+              Ambiente seguro · Dados da sua operação
+            </p>
+          </section>
+
+          <section className="flex min-h-screen items-center justify-center px-5 py-8 sm:px-8 lg:bg-white/[0.025] lg:backdrop-blur-[2px]">
+            <div className="w-full max-w-[29rem]">
+              <div className="allbusiness-auth-enter allbusiness-auth-enter-one mb-8 flex justify-center lg:hidden">
+                {marca.logoUrl ? (
+                  <>
+                    {/* eslint-disable-next-line @next/next/no-img-element */}
+                    <img
+                      data-testid="logo-da-fachada-movel"
+                      src={marca.logoUrl}
+                      alt={marca.nome}
+                      className="h-20 w-auto max-w-[15rem] object-contain"
+                    />
+                  </>
+                ) : marcaEhADoProduto({ name: marca.nome, logoUrl: null }) ? (
+                  <LogotipoDoProduto nome={marca.nome} className="h-11 w-auto" />
+                ) : (
+                  <p className="text-2xl font-bold tracking-tight">{marca.nome}</p>
+                )}
+              </div>
+
+              <div className="allbusiness-auth-card allbusiness-auth-enter allbusiness-auth-enter-three rounded-[1.75rem] border border-white/10 bg-white/[0.075] p-6 shadow-2xl shadow-black/35 backdrop-blur-xl sm:p-9">
+                {children}
+              </div>
+
+              <div className="allbusiness-auth-enter allbusiness-auth-enter-five mt-6 flex items-center justify-center gap-2 text-xs text-slate-500">
+                <span className="h-1.5 w-1.5 rounded-full bg-emerald-400 shadow-[0_0_12px_rgba(52,211,153,.8)]" />
+                Acesso protegido à sua operação
+              </div>
             </div>
-          ) : null}
-          {children}
-        </div>
+          </section>
+        </main>
       </div>
     </IdiomaProvider>
   );

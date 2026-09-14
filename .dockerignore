@@ -9,6 +9,7 @@ test-results
 tests
 playwright.config.ts
 *.png
+!public/allbusiness-logo.png
 *.log
 .lina
 docs
