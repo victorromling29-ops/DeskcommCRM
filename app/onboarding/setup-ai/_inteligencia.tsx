@@ -200,7 +200,7 @@ export function InteligenciaDele({ inicial }: { inicial: EstadoDaChave }) {
           t(
             "Não consegui testar o crédito agora. Dá para seguir — mas confira o saldo na conta da empresa de IA antes de confiar nele.",
           )}
-        {prova === null && t("Pronta para uso.")}
+        {prova === null && t("Conferindo se a chave tem crédito…")}
       </p>
     </section>
   );

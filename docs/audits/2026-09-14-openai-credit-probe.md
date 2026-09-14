@@ -2,7 +2,7 @@
 
 O onboarding recebia HTTP 400 `unsupported_parameter` porque a prova enviava
 `max_tokens` ao modelo configurado. A OpenAI usa `max_completion_tokens` neste
-endpoint; o limite continua sendo um token, incluindo raciocínio. Não se troca
+endpoint; o limite é 256 tokens, incluindo raciocínio. Não se troca
 modelo, credencial, timeout ou endpoint, nem se acrescentam tentativas.
 
 Fonte: https://developers.openai.com/api/reference/resources/chat/subresources/completions/methods/create
@@ -15,8 +15,15 @@ Fonte: https://developers.openai.com/api/reference/resources/chat/subresources/c
   mutação já exercitada pela execução anterior, que reprova três testes.
 - Cobertura: corpo de OpenAI para dois modelos, serialização no fetch, uma chamada,
   limite mínimo e preservação de Anthropic, OpenRouter e Google.
-- Esta prova não equivale a uma conversa completa de atendimento. Validação visual,
-  teste real da API e implantação ainda devem ser conferidos separadamente.
+- Validação real revelou um segundo erro: um token não permite finalizar a
+  resposta desse modelo. Com prompt `Responda apenas OK.` e teto 256, chamada
+  diagnóstica retornou HTTP 200, finish_reason stop e quatro tokens de saída.
+- O HTML inicial dizia `Pronta para uso` antes do efeito da prova terminar.
+  Agora informa conferência pendente; teste SSR guarda a ausência de sucesso falso.
+- A suíte global foi iniciada e interrompida pela duração na VPS limitada a uma
+  CPU; não está aprovada. Typecheck passou; lint sem erros, 349 avisos gerais.
+- Esta prova não equivale a uma conversa completa de atendimento. A implantação
+  e a validação visual final devem aguardar o resultado assíncrono da prova.
 
 ## Living System Checklist
 

@@ -60,7 +60,7 @@ export async function GET(req: NextRequest) {
   const querProvar = req.nextUrl.searchParams.get("provar") === "1";
   if (!querProvar) return ok(retrato);
 
-  // A partir daqui custa dinheiro: uma geração real de um token. Nunca sai de
+  // A partir daqui custa dinheiro: uma geração real, curta e limitada. Nunca sai de
   // graça num GET que a tela chama sozinha. 2ª chamada a requireRole de
   // propósito: é o mesmo mecanismo, com o mínimo mais alto — inclui o gate de
   // MFA para quem só tinha rank de manager mas está prestes a exercer admin.

@@ -44,14 +44,14 @@ describe("montarRequisicaoDeProva", () => {
   });
 
   it.each(["gpt-5.6-terra", "gpt-4o"])(
-    "OpenAI usa o limite atual de um token sem substituir o modelo %s",
+    "OpenAI reserva orçamento curto para raciocínio sem substituir o modelo %s",
     (modelo) => {
       const req = montarRequisicaoDeProva("openai", "k", modelo)!;
       expect(req.url).toBe("https://api.openai.com/v1/chat/completions");
       expect(req.body).toEqual({
         model: modelo,
-        max_completion_tokens: 1,
-        messages: [{ role: "user", content: "oi" }],
+        max_completion_tokens: 256,
+        messages: [{ role: "user", content: "Responda apenas OK." }],
       });
       expect(req.body).not.toHaveProperty("max_tokens");
     },
@@ -107,7 +107,7 @@ describe("provarSaldo", () => {
       const body = JSON.parse(String(init?.body));
       // Reproduz a rejeição mostrada no onboarding, sem chamar a API real.
       return new Response("{}", {
-        status: "max_tokens" in body ? 400 : 200,
+        status: "max_tokens" in body || body.max_completion_tokens < 256 ? 400 : 200,
       });
     });
     const r = await provarSaldo("openai", "chave-de-teste", "gpt-5.6-terra", {
@@ -120,8 +120,8 @@ describe("provarSaldo", () => {
     expect(init?.method).toBe("POST");
     expect(JSON.parse(String(init?.body))).toEqual({
       model: "gpt-5.6-terra",
-      max_completion_tokens: 1,
-      messages: [{ role: "user", content: "oi" }],
+      max_completion_tokens: 256,
+      messages: [{ role: "user", content: "Responda apenas OK." }],
     });
   });
 

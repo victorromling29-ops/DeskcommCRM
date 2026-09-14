@@ -9,7 +9,7 @@
  * não tinha como saber onde olhar.
  *
  * A única coisa que prova saldo é a coisa que o provedor cobra: uma geração.
- * Por isso a prova aqui é uma chamada real, mínima (um token), e por isso ela
+ * Por isso a prova aqui é uma chamada real, curta e limitada, e por isso ela
  * nunca sai de graça — é explicitamente pedida, não roda num GET que a tela
  * chama sozinha.
  *
@@ -41,8 +41,8 @@ interface Requisicao {
 }
 
 /**
- * A menor geração possível em cada provedor: limite de um token porque o
- * objetivo é atravessar a cobrança, não obter texto.
+ * Geração curta para testar a cobrança. A OpenAI reserva até 256 tokens:
+ * um único token pode ser insuficiente para raciocínio e encerrar com HTTP 400.
  */
 export function montarRequisicaoDeProva(
   provider: string,
@@ -67,7 +67,11 @@ export function montarRequisicaoDeProva(
         url: "https://api.openai.com/v1/chat/completions",
         headers: { authorization: `Bearer ${apiKey}`, "content-type": "application/json" },
         // Inclui tokens de raciocínio; `max_tokens` é recusado por modelos novos.
-        body: { model: modelo, max_completion_tokens: 1, messages: msg },
+        body: {
+          model: modelo,
+          max_completion_tokens: 256,
+          messages: [{ role: "user", content: "Responda apenas OK." }],
+        },
       };
     case "openrouter":
       return {
