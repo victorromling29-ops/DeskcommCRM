@@ -3971,6 +3971,24 @@ export const DICIONARIO: Traducoes = {
   "é o padrão do sistema": { es: "es el predeterminado del sistema" },
   "veio de quem instalou o sistema": { es: "vino de quien instaló el sistema" },
   "Como sua empresa aparece": { es: "Cómo aparece tu empresa" },
+  "Marca da organização": { es: "Marca de la organización" },
+  "Personalize a empresa selecionada sem alterar as demais organizações.": {
+    es: "Personaliza la empresa seleccionada sin cambiar las demás organizaciones.",
+  },
+  "Organização ativa": { es: "Organización activa" },
+  "Somente esta organização": { es: "Solo esta organización" },
+  "O nome, as cores e o logo abaixo serão aplicados somente a esta organização. A tela de entrada e as outras empresas não mudam.": {
+    es:
+      "El nombre, los colores y el logo de abajo se aplicarán solo a esta organización. La pantalla de acceso y las demás empresas no cambian.",
+  },
+  "Para personalizar outra empresa, troque a organização no seletor do topo antes de editar.": {
+    es:
+      "Para personalizar otra empresa, cambia la organización en el selector superior antes de editar.",
+  },
+  "Quer mudar o login e a marca padrão usada por todas as empresas?": {
+    es: "¿Quieres cambiar el acceso y la marca predeterminada usada por todas las empresas?",
+  },
+  "Editar marca da plataforma": { es: "Editar marca de la plataforma" },
   "Nome da sua empresa": { es: "Nombre de tu empresa" },
   "Aparece no menu lateral, para quem trabalha aqui. Deixe em branco para usar": {
     es: "Aparece en el menú lateral, para quien trabaja aquí. Déjalo en blanco para usar",

@@ -604,6 +604,12 @@ test.describe("o logo subido pela tela chega à tela", () => {
     ).toContain(`${PREFIXO_PUBLICO}${creds.org_id}/`);
 
     await page.goto("/app/settings/marca");
+    const escopo = page.getByTestId("escopo-da-marca");
+    await expect(escopo.getByRole("heading", { name: "E2E Test Org" })).toBeVisible();
+    await expect(escopo.getByText(/somente esta organização/i)).toBeVisible();
+    await expect(
+      escopo.getByText(/a tela de entrada e as outras empresas não mudam/i),
+    ).toBeVisible();
     await subir(page, "organizacao", {
       // Nome E `Content-Type` mentem — os dois campos que o atacante escolhe.
       nome: "logo.png",
