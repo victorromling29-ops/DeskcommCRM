@@ -83,11 +83,12 @@ export function farejarTipo(bytes: Uint8Array): TipoDeLogo | null {
  * O arquivo PARECE SVG (ou qualquer XML/HTML que um navegador executaria).
  *
  * Deliberadamente FROUXO, ao contrário de `farejarTipo`: aqui o erro caro é o
- * falso NEGATIVO. `farejarTipo` já recusa tudo que não seja PNG/JPEG, então esta
- * função não decide se o arquivo entra — decide se a pessoa recebe a frase que
- * explica o problema dela. Um "quase-SVG" que escape daqui ainda é barrado pelo
- * farejador; um PNG que caia aqui por engano é impossível, porque a assinatura
- * PNG começa com `0x89`, que não é `<` nem espaço.
+ * falso NEGATIVO. Esta função não decide se o arquivo entra — decide se a pessoa
+ * recebe a frase que explica o problema dela. Ela só deve ser consultada DEPOIS
+ * de `farejarTipo`: PNGs legítimos podem carregar metadados XMP com tags XML ou
+ * até a palavra `<svg>` dentro da janela inicial. O formato reconhecido pelos
+ * bytes de assinatura vence esses metadados; um SVG cru continua sem assinatura
+ * PNG/JPEG e chega a esta verificação.
  *
  * Varre a janela inteira em vez de olhar só o começo porque BOM, `<?xml …?>`,
  * `<!DOCTYPE …>` e comentários podem preceder a tag raiz.
@@ -99,6 +100,21 @@ export function pareceSvg(bytes: Uint8Array): boolean {
   let texto = "";
   for (const b of janela) texto += String.fromCharCode(b);
   return /<\s*svg[\s>]/i.test(texto) || /<\?xml/i.test(texto) || /<!doctype\s+svg/i.test(texto);
+}
+
+export type ResultadoDaClassificacaoDoLogo =
+  { ok: true; tipo: TipoDeLogo } | { ok: false; motivo: "svg" | "tipo_nao_suportado" };
+
+/**
+ * Classifica o upload na ordem que evita tanto o bypass quanto o falso positivo:
+ * primeiro a assinatura binária aceita PNG/JPEG; só o conteúdo não reconhecido
+ * é examinado como texto para oferecer a mensagem específica de SVG.
+ */
+export function classificarLogo(bytes: Uint8Array): ResultadoDaClassificacaoDoLogo {
+  const tipo = farejarTipo(bytes);
+  if (tipo) return { ok: true, tipo };
+  if (pareceSvg(bytes)) return { ok: false, motivo: "svg" };
+  return { ok: false, motivo: "tipo_nao_suportado" };
 }
 
 /** A extensão que cada tipo farejado grava no caminho. */
