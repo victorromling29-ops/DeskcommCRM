@@ -36,6 +36,11 @@ services:
     pull_policy: ${APP_PULL_POLICY:-always}
     restart: unless-stopped
     env_file: .env
+    environment:
+      # CA público oficial: mantém validação da cadeia e hostname no Postgres.
+      NODE_EXTRA_CA_CERTS: /etc/deskcomm/certs/supabase-ca.crt
+    volumes:
+      - ./docker/certs:/etc/deskcomm/certs:ro
     depends_on:
       srh:
         condition: service_started
@@ -99,6 +104,9 @@ services:
     environment:
       # dentro da rede do compose, o WAHA é o serviço 'waha' na porta interna 3000
       WAHA_API_BASE_URL: http://waha:3000
+      NODE_EXTRA_CA_CERTS: /etc/deskcomm/certs/supabase-ca.crt
+    volumes:
+      - ./docker/certs:/etc/deskcomm/certs:ro
     networks:
       - internal
     healthcheck:
