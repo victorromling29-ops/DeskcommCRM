@@ -1,8 +1,8 @@
-// Design tokens for DeskcommCRM showcase.
-// "Soft-tech / calmo" — neutros desaturados (greige/warm-gray), accent não-saturado.
+// Design tokens for the AllBusiness showcase.
+// "Steel workspace" — cool gray surfaces, graphite text and a focused blue accent.
 // 5-Constraint Rule applied: Shape, Color (exact hex), Typography, Motion, Layout.
 
-export type PaletteId = "sage" | "clay" | "mist" | "plum" | "olive";
+export type PaletteId = "allbusiness" | "sage" | "clay" | "mist" | "plum" | "olive";
 export type TypoId = "bricolage-jakarta" | "fraunces-manrope" | "atkinson" | "source-plex";
 export type DensityId = "aerada" | "equilibrada" | "compacta";
 export type ThemeId = "light" | "dark";
@@ -24,7 +24,7 @@ export type PaletteDef = {
   name: string;
   description: string;
   accent: ColorScale;
-  // Greige/warm-gray neutrals — explicitly NOT slate/zinc.
+  // Neutral scales are tuned to the visual character of each palette.
   neutralLight: ColorScale;
   neutralDark: ColorScale;
   states: { light: StateColors; dark: StateColors };
@@ -38,6 +38,34 @@ export type PaletteDef = {
 // ─── Palettes ──────────────────────────────────────────────────────────────
 
 export const PALETTES: Record<PaletteId, PaletteDef> = {
+  allbusiness: {
+    id: "allbusiness",
+    name: "AllBusiness Steel",
+    description: "Azul técnico e cinza frio. Preciso, confiável e operacional.",
+    accent: {
+      50: "#edf6fe", 100: "#d8ecfe", 200: "#b1d7fa", 300: "#7ebbf0",
+      400: "#49a0e5", 500: "#1c88d1", 600: "#076eae", 700: "#145888",
+      800: "#17486d", 900: "#183d5a", 950: "#091e2f",
+    },
+    neutralLight: {
+      50: "#f4f7fb", 100: "#eaf0f6", 200: "#d7e0ea", 300: "#b9c7d6",
+      400: "#91a2b5", 500: "#6f8297", 600: "#4b6077", 700: "#34495f",
+      800: "#223449", 900: "#0f1f33", 950: "#07111f",
+    },
+    neutralDark: {
+      50: "#f2f7fc", 100: "#dbe6f1", 200: "#b5c5d6", 300: "#9bacc0",
+      400: "#64778e", 500: "#42566d", 600: "#2d4055", 700: "#152438",
+      800: "#0d1928", 900: "#07111f", 950: "#030914",
+    },
+    states: {
+      light: { success: "#5a8a5f", warning: "#b07a2b", error: "#a94a3c", info: "#4a7a93" },
+      dark:  { success: "#82a077", warning: "#d09455", error: "#c87263", info: "#7da9bf" },
+    },
+    surfaces: {
+      light: { bg: "#f4f7fb", surface: "#ffffff", surfaceElevated: "#eaf1f8", text: "#0f1f33", textMuted: "#4b6077", border: "#d7e0ea" },
+      dark:  { bg: "#07111f", surface: "#0d1928", surfaceElevated: "#152438", text: "#f2f7fc", textMuted: "#9bacc0", border: "#22354a" },
+    },
+  },
   sage: {
     id: "sage",
     name: "Sage",
@@ -253,9 +281,9 @@ export const BORDERS = [
 
 export const SHADOWS = [
   { token: "none",  value: "none",                                              use: "Default. Use whitespace + border." },
-  { token: "sm",    value: "0 1px 2px 0 rgba(20,18,14,0.04)",                   use: "Hover discreto em cards interativos." },
-  { token: "md",    value: "0 4px 12px -2px rgba(20,18,14,0.06), 0 2px 4px -1px rgba(20,18,14,0.04)", use: "Popover, dropdown, toast." },
-  { token: "lg",    value: "0 12px 32px -6px rgba(20,18,14,0.10), 0 4px 12px -2px rgba(20,18,14,0.06)", use: "Modal, sheet." },
+  { token: "sm",    value: "0 1px 2px 0 rgba(8,20,38,0.04)",                    use: "Hover discreto em cards interativos." },
+  { token: "md",    value: "0 4px 12px -2px rgba(8,20,38,0.08), 0 2px 4px -1px rgba(8,20,38,0.04)", use: "Popover, dropdown, toast." },
+  { token: "lg",    value: "0 12px 32px -6px rgba(8,20,38,0.12), 0 4px 12px -2px rgba(8,20,38,0.07)", use: "Modal, sheet." },
   { token: "inset", value: "inset 0 1px 0 0 rgba(255,255,255,0.04)",            use: "Highlight superior em superfícies dark." },
 ];
 
