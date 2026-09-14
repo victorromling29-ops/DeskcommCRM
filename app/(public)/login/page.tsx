@@ -22,16 +22,21 @@ export default async function LoginPage({
   const {
     data: { user },
   } = await supabase.auth.getUser();
-  const idioma = normalizarIdioma(
-    (user?.user_metadata?.locale as string | undefined) ?? null,
-  );
+  const idioma = normalizarIdioma((user?.user_metadata?.locale as string | undefined) ?? null);
   const t = (texto: string) => traduzir(texto, idioma);
 
   return (
-    <div className="space-y-6">
-      <div className="space-y-1.5 text-center">
-        <h1 className="text-2xl font-semibold tracking-tight">{t("Entrar")}</h1>
-        <p className="text-sm text-muted-foreground">{branding().name}</p>
+    <div className="space-y-7 text-white">
+      <div className="space-y-2">
+        <p className="font-mono text-[11px] tracking-[0.22em] text-sky-300 uppercase">
+          {branding().name}
+        </p>
+        <h1 className="text-3xl font-bold tracking-[-0.035em] sm:text-4xl">
+          {t("Bem-vindo de volta")}
+        </h1>
+        <p className="max-w-sm text-sm leading-6 text-slate-300">
+          {t("Entre para acompanhar conversas, oportunidades e próximos passos.")}
+        </p>
       </div>
       {reset === "success" && (
         <div
@@ -93,16 +98,16 @@ export default async function LoginPage({
         <p>
           <Link
             href="/login/forgot"
-            className="text-muted-foreground underline underline-offset-4 hover:text-foreground"
+            className="text-slate-300 underline decoration-white/20 underline-offset-4 transition-colors hover:text-white"
           >
             {t("Esqueci minha senha")}
           </Link>
         </p>
-        <p className="text-muted-foreground">
+        <p className="text-slate-400">
           {t("Não tem conta?")}{" "}
           <Link
             href="/signup"
-            className="font-medium text-foreground underline underline-offset-4"
+            className="font-bold text-sky-300 underline decoration-sky-400/30 underline-offset-4 transition-colors hover:text-sky-200"
           >
             {t("Criar conta")}
           </Link>

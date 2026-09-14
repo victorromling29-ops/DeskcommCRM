@@ -4,6 +4,7 @@ import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useTransition, useState } from "react";
 import { useRouter } from "next/navigation";
+import { ArrowRight, LoaderCircle, LockKeyhole, Mail } from "lucide-react";
 
 import { useT } from "@/hooks/i18n/useT";
 import { loginSchema, type LoginInput } from "@/lib/auth/schemas";
@@ -58,30 +59,50 @@ export function LoginForm({ next }: { next?: string }) {
   };
 
   return (
-    <form method="post" onSubmit={handleSubmit(onSubmit)} className="space-y-4" noValidate>
-      <div className="space-y-1.5">
-        <Label htmlFor="email">Email</Label>
-        <Input
-          id="email"
-          type="email"
-          autoComplete="email"
-          autoFocus
-          aria-invalid={errors.email ? true : undefined}
-          {...register("email")}
-        />
+    <form method="post" onSubmit={handleSubmit(onSubmit)} className="space-y-5" noValidate>
+      <div className="space-y-2">
+        <Label htmlFor="email" className="text-slate-200">
+          Email
+        </Label>
+        <div className="relative">
+          <Mail
+            className="pointer-events-none absolute top-1/2 left-4 h-4 w-4 -translate-y-1/2 text-slate-500"
+            aria-hidden="true"
+          />
+          <Input
+            id="email"
+            type="email"
+            autoComplete="email"
+            autoFocus
+            placeholder="voce@empresa.com"
+            className="h-12 rounded-xl border-white/10 bg-[#08111f]/75 pl-11 text-white placeholder:text-slate-600 focus-visible:border-sky-400/70 focus-visible:ring-sky-400/20"
+            aria-invalid={errors.email ? true : undefined}
+            {...register("email")}
+          />
+        </div>
         {errors.email && (
           <p className="text-xs text-destructive">{t(errors.email.message ?? "")}</p>
         )}
       </div>
-      <div className="space-y-1.5">
-        <Label htmlFor="password">{t("Senha")}</Label>
-        <Input
-          id="password"
-          type="password"
-          autoComplete="current-password"
-          aria-invalid={errors.password ? true : undefined}
-          {...register("password")}
-        />
+      <div className="space-y-2">
+        <Label htmlFor="password" className="text-slate-200">
+          {t("Senha")}
+        </Label>
+        <div className="relative">
+          <LockKeyhole
+            className="pointer-events-none absolute top-1/2 left-4 h-4 w-4 -translate-y-1/2 text-slate-500"
+            aria-hidden="true"
+          />
+          <Input
+            id="password"
+            type="password"
+            autoComplete="current-password"
+            placeholder="Sua senha"
+            className="h-12 rounded-xl border-white/10 bg-[#08111f]/75 pl-11 text-white placeholder:text-slate-600 focus-visible:border-sky-400/70 focus-visible:ring-sky-400/20"
+            aria-invalid={errors.password ? true : undefined}
+            {...register("password")}
+          />
+        </div>
         {errors.password && (
           <p className="text-xs text-destructive">{t(errors.password.message ?? "")}</p>
         )}
@@ -94,8 +115,25 @@ export function LoginForm({ next }: { next?: string }) {
           {serverError}
         </div>
       )}
-      <Button type="submit" className="w-full" disabled={isPending}>
-        {isPending ? t("Entrando...") : t("Entrar")}
+      <Button
+        type="submit"
+        className="group h-12 w-full rounded-xl bg-sky-600 font-bold text-white shadow-lg shadow-sky-950/40 transition-[transform,background-color,box-shadow] hover:-translate-y-0.5 hover:bg-sky-500 hover:shadow-sky-900/50 focus-visible:ring-sky-300 active:translate-y-0"
+        disabled={isPending}
+      >
+        {isPending ? (
+          <>
+            <LoaderCircle className="h-4 w-4 animate-spin" aria-hidden="true" />
+            {t("Entrando...")}
+          </>
+        ) : (
+          <>
+            {t("Entrar")}
+            <ArrowRight
+              className="h-4 w-4 transition-transform group-hover:translate-x-1"
+              aria-hidden="true"
+            />
+          </>
+        )}
       </Button>
     </form>
   );

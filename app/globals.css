@@ -870,6 +870,151 @@
   }
 }
 
+/* ---- Fachada AllBusiness · a conversa percorre o funil ------------------- */
+@keyframes allbusiness-auth-enter {
+  from {
+    opacity: 0;
+    transform: translateY(14px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes allbusiness-auth-flow {
+  0% {
+    left: 0;
+    opacity: 0;
+  }
+  12% {
+    opacity: 1;
+  }
+  88% {
+    opacity: 1;
+  }
+  100% {
+    left: calc(100% - 10px);
+    opacity: 0;
+  }
+}
+
+@keyframes allbusiness-auth-orbit {
+  0%,
+  100% {
+    transform: translate3d(0, 0, 0) scale(1);
+  }
+  50% {
+    transform: translate3d(22px, -18px, 0) scale(1.08);
+  }
+}
+
+.allbusiness-auth-grid {
+  position: absolute;
+  inset: 0;
+  opacity: 0.18;
+  background-image:
+    linear-gradient(rgba(56, 189, 248, 0.08) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(56, 189, 248, 0.08) 1px, transparent 1px);
+  background-size: 56px 56px;
+  mask-image: radial-gradient(circle at 28% 48%, black, transparent 68%);
+}
+
+.allbusiness-auth-orb {
+  position: absolute;
+  border-radius: 999px;
+  filter: blur(2px);
+  animation: allbusiness-auth-orbit 12s ease-in-out infinite;
+}
+
+.allbusiness-auth-orb-one {
+  top: -12rem;
+  left: 8%;
+  width: 34rem;
+  height: 34rem;
+  background: radial-gradient(circle, rgba(2, 132, 199, 0.2), transparent 68%);
+}
+
+.allbusiness-auth-orb-two {
+  right: -14rem;
+  bottom: -16rem;
+  width: 36rem;
+  height: 36rem;
+  background: radial-gradient(circle, rgba(14, 165, 233, 0.13), transparent 70%);
+  animation-delay: -6s;
+}
+
+.allbusiness-auth-enter {
+  opacity: 0;
+  animation: allbusiness-auth-enter 0.7s cubic-bezier(0.2, 0.8, 0.2, 1) forwards;
+}
+
+.allbusiness-auth-enter-one {
+  animation-delay: 0.05s;
+}
+.allbusiness-auth-enter-two {
+  animation-delay: 0.14s;
+}
+.allbusiness-auth-enter-three {
+  animation-delay: 0.23s;
+}
+.allbusiness-auth-enter-four {
+  animation-delay: 0.32s;
+}
+.allbusiness-auth-enter-five {
+  animation-delay: 0.41s;
+}
+
+.allbusiness-auth-flow::before {
+  content: "";
+  position: absolute;
+  top: 2px;
+  left: 0;
+  right: 0;
+  height: 1px;
+  background: linear-gradient(90deg, rgba(56, 189, 248, 0.65), rgba(56, 189, 248, 0.08));
+}
+
+.allbusiness-auth-flow-step::before {
+  content: "";
+  position: absolute;
+  top: -2px;
+  left: 0;
+  width: 9px;
+  height: 9px;
+  border: 2px solid #38bdf8;
+  border-radius: 999px;
+  background: #040914;
+  box-shadow: 0 0 0 5px rgba(56, 189, 248, 0.08);
+}
+
+.allbusiness-auth-flow-pulse {
+  position: absolute;
+  top: -3px;
+  left: 0;
+  width: 10px;
+  height: 10px;
+  border-radius: 999px;
+  background: #e0f2fe;
+  box-shadow: 0 0 18px 5px rgba(56, 189, 248, 0.75);
+  animation: allbusiness-auth-flow 4.8s ease-in-out infinite 1.2s;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .allbusiness-auth-enter {
+    opacity: 1;
+    animation: none;
+    transform: none;
+  }
+  .allbusiness-auth-orb,
+  .allbusiness-auth-flow-pulse {
+    animation: none;
+  }
+  .allbusiness-auth-flow-pulse {
+    display: none;
+  }
+}
+
 /* ---- Agenda · a coluna de horários que desliza para dentro ----------------
    O painel de marcação tem três tempos (escolher dia → escolher horário →
    confirmar) e a coluna de horários NÃO existe no primeiro. Quando o dia é
