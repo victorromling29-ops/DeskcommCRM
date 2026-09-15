@@ -1,8 +1,8 @@
-// Design tokens for the AllBusiness showcase.
-// "Steel workspace" — cool gray surfaces, graphite text and a focused blue accent.
+// Design tokens for the platform showcase.
+// "Quiet workspace" — soft gray surfaces, graphite text and an olive accent.
 // 5-Constraint Rule applied: Shape, Color (exact hex), Typography, Motion, Layout.
 
-export type PaletteId = "allbusiness" | "sage" | "clay" | "mist" | "plum" | "olive";
+export type PaletteId = "base" | "sage" | "clay" | "mist" | "plum" | "olive";
 export type TypoId = "bricolage-jakarta" | "fraunces-manrope" | "atkinson" | "source-plex";
 export type DensityId = "aerada" | "equilibrada" | "compacta";
 export type ThemeId = "light" | "dark";
@@ -38,32 +38,32 @@ export type PaletteDef = {
 // ─── Palettes ──────────────────────────────────────────────────────────────
 
 export const PALETTES: Record<PaletteId, PaletteDef> = {
-  allbusiness: {
-    id: "allbusiness",
-    name: "AllBusiness Steel",
-    description: "Azul técnico e cinza frio. Preciso, confiável e operacional.",
+  base: {
+    id: "base",
+    name: "Grafite suave",
+    description: "Cinza claro, grafite e oliva discreto. Calmo e profissional.",
     accent: {
-      50: "#edf6fe", 100: "#d8ecfe", 200: "#b1d7fa", 300: "#7ebbf0",
-      400: "#49a0e5", 500: "#1c88d1", 600: "#076eae", 700: "#145888",
-      800: "#17486d", 900: "#183d5a", 950: "#091e2f",
+      50: "#f4f6f2", 100: "#e5e9e2", 200: "#cad2c5", 300: "#a7b39f",
+      400: "#86977d", 500: "#6c7e62", 600: "#53624a", 700: "#444f3d",
+      800: "#384133", 900: "#31382d", 950: "#1a1e17",
     },
     neutralLight: {
-      50: "#f4f7fb", 100: "#eaf0f6", 200: "#d7e0ea", 300: "#b9c7d6",
-      400: "#91a2b5", 500: "#6f8297", 600: "#4b6077", 700: "#34495f",
-      800: "#223449", 900: "#0f1f33", 950: "#07111f",
+      50: "#efefec", 100: "#e4e6e0", 200: "#d4d6d0", 300: "#b5b9b0",
+      400: "#a5a9a0", 500: "#747971", 600: "#656964", 700: "#484e46",
+      800: "#30342f", 900: "#242625", 950: "#191c19",
     },
     neutralDark: {
-      50: "#f2f7fc", 100: "#dbe6f1", 200: "#b5c5d6", 300: "#9bacc0",
-      400: "#64778e", 500: "#42566d", 600: "#2d4055", 700: "#152438",
-      800: "#0d1928", 900: "#07111f", 950: "#030914",
+      50: "#f0f1ed", 100: "#dce0d6", 200: "#c5cdbd", 300: "#b2b8ac",
+      400: "#8b9484", 500: "#626e59", 600: "#47533f", 700: "#2d322c",
+      800: "#222622", 900: "#191c19", 950: "#111410",
     },
     states: {
       light: { success: "#5a8a5f", warning: "#b07a2b", error: "#a94a3c", info: "#4a7a93" },
       dark:  { success: "#82a077", warning: "#d09455", error: "#c87263", info: "#7da9bf" },
     },
     surfaces: {
-      light: { bg: "#f4f7fb", surface: "#ffffff", surfaceElevated: "#eaf1f8", text: "#0f1f33", textMuted: "#4b6077", border: "#d7e0ea" },
-      dark:  { bg: "#07111f", surface: "#0d1928", surfaceElevated: "#152438", text: "#f2f7fc", textMuted: "#9bacc0", border: "#22354a" },
+      light: { bg: "#efefec", surface: "#f8f8f5", surfaceElevated: "#e4e6e0", text: "#242625", textMuted: "#656964", border: "#d4d6d0" },
+      dark:  { bg: "#191c19", surface: "#222622", surfaceElevated: "#2d322c", text: "#f0f1ed", textMuted: "#b2b8ac", border: "#3b4338" },
     },
   },
   sage: {

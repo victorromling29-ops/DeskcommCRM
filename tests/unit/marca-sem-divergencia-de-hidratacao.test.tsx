@@ -236,9 +236,10 @@ describe("catraca: `branding()` é server-only", () => {
     // A guarda contra o erro NOVO que o corte por bloco introduz: se o regex de
     // `/* … */` engolisse código, esta lista esvaziaria e a catraca ficaria verde
     // por cegueira — o mesmo defeito que ela existe para impedir, do lado do
-    // instrumento. Estes quatro são servidores e DEVEM chamar `branding()`.
+    // instrumento. Estes três são servidores e DEVEM chamar `branding()`.
+    // O login lê `marcaDaSaida(null)`: a fachada precisa refletir o banco em
+    // runtime, e essa função é igualmente server-only.
     const esperados = [
-      "app/(public)/login/page.tsx",
       "app/(public)/signup/page.tsx",
       "app/onboarding/layout.tsx",
       "lib/legal/operador.ts",

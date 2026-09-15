@@ -61,12 +61,12 @@ export function LoginForm({ next }: { next?: string }) {
   return (
     <form method="post" onSubmit={handleSubmit(onSubmit)} className="space-y-5" noValidate>
       <div className="space-y-2">
-        <Label htmlFor="email" className="text-slate-200">
+        <Label htmlFor="email" className="text-text">
           Email
         </Label>
         <div className="relative">
           <Mail
-            className="pointer-events-none absolute top-1/2 left-4 h-4 w-4 -translate-y-1/2 text-slate-500"
+            className="pointer-events-none absolute top-1/2 left-4 h-4 w-4 -translate-y-1/2 text-text-muted"
             aria-hidden="true"
           />
           <Input
@@ -75,7 +75,7 @@ export function LoginForm({ next }: { next?: string }) {
             autoComplete="email"
             autoFocus
             placeholder="voce@empresa.com"
-            className="h-12 rounded-xl border-white/10 bg-[#08111f]/75 pl-11 text-white placeholder:text-slate-600 focus-visible:border-sky-400/70 focus-visible:ring-sky-400/20"
+            className="h-12 rounded-xl border-border-strong bg-surface pl-11 text-text placeholder:text-text-muted focus-visible:border-text focus-visible:ring-text/20"
             aria-invalid={errors.email ? true : undefined}
             {...register("email")}
           />
@@ -85,12 +85,12 @@ export function LoginForm({ next }: { next?: string }) {
         )}
       </div>
       <div className="space-y-2">
-        <Label htmlFor="password" className="text-slate-200">
+        <Label htmlFor="password" className="text-text">
           {t("Senha")}
         </Label>
         <div className="relative">
           <LockKeyhole
-            className="pointer-events-none absolute top-1/2 left-4 h-4 w-4 -translate-y-1/2 text-slate-500"
+            className="pointer-events-none absolute top-1/2 left-4 h-4 w-4 -translate-y-1/2 text-text-muted"
             aria-hidden="true"
           />
           <Input
@@ -98,7 +98,7 @@ export function LoginForm({ next }: { next?: string }) {
             type="password"
             autoComplete="current-password"
             placeholder="Sua senha"
-            className="h-12 rounded-xl border-white/10 bg-[#08111f]/75 pl-11 text-white placeholder:text-slate-600 focus-visible:border-sky-400/70 focus-visible:ring-sky-400/20"
+            className="h-12 rounded-xl border-border-strong bg-surface pl-11 text-text placeholder:text-text-muted focus-visible:border-text focus-visible:ring-text/20"
             aria-invalid={errors.password ? true : undefined}
             {...register("password")}
           />
@@ -117,7 +117,7 @@ export function LoginForm({ next }: { next?: string }) {
       )}
       <Button
         type="submit"
-        className="group h-12 w-full rounded-xl bg-sky-600 font-bold text-white shadow-lg shadow-sky-950/40 transition-[transform,background-color,box-shadow] hover:-translate-y-0.5 hover:bg-sky-500 hover:shadow-sky-900/50 focus-visible:ring-sky-300 active:translate-y-0"
+        className="group h-12 w-full rounded-xl bg-[#30342f] font-bold text-[#f8f8f5] transition-colors hover:bg-[#484e46] focus-visible:ring-[#656964] motion-reduce:transition-none"
         disabled={isPending}
       >
         {isPending ? (

@@ -312,7 +312,7 @@ describe("o bloco emitido não pode contradizer o globals.css", () => {
   it("a caminhada de fato ANDA — e a emissão anda junto", () => {
     // Guarda de vacuidade da sabotagem: se nenhuma semente deslocasse, emitir a
     // rampa crua e emiti-la deslocada dariam o mesmo texto, e os testes acima
-    // seriam verdes contra o defeito. 13 combos (semente × tema) andam — o mesmo
+    // seriam verdes contra o defeito. 14 combos (semente × tema) andam — o mesmo
     // número que `branding-contraste.test.ts` mede na derivação.
     let andaram = 0;
     for (const hex of SEMENTES) {
@@ -332,30 +332,30 @@ describe("o bloco emitido não pode contradizer o globals.css", () => {
         );
       }
     }
-    expect(andaram).toBe(13);
+    expect(andaram).toBe(14);
   });
 });
 
 describe("controle positivo — o produto sem marca não pode se mexer", () => {
-  it("o azul AllBusiness reproduz, pintado, os números do design system", () => {
-    // `#076eae` é a semente do próprio produto: ela não desloca nada, e os pares
+  it("o oliva padrão reproduz, pintado, os números do design system", () => {
+    // `#53624a` é a semente do próprio produto: ela não desloca nada, e os pares
     // pintados têm que dar o que o `globals.css` sempre deu. Se estes números
     // mudarem, o conserto vazou para quem não pediu.
-    const cor = corDe("#076eae");
+    const cor = corDe("#53624a");
     expect(cor.derivada?.claro.deslocamento).toBe(0);
     expect(cor.derivada?.escuro.deslocamento).toBe(0);
 
-    const p = pintadosDaSemente("#076eae");
+    const p = pintadosDaSemente("#53624a");
     // Claro: os dois números que `contraste.ts` documenta como medidos à mão.
-    expect(foco(p.claro, "--color-bg")).toBeCloseTo(3.56, 2);
-    expect(foco(p.claro, "--color-surface-elevated")).toBeCloseTo(3.36, 2);
+    expect(foco(p.claro, "--color-bg")).toBeCloseTo(3.8, 2);
+    expect(foco(p.claro, "--color-surface-elevated")).toBeCloseTo(3.48, 2);
     // Escuro: a rampa derivada da semente é exatamente a publicada no CSS.
-    expect(foco(p.escuro, "--color-bg")).toBeCloseTo(6.71, 2);
-    expect(foco(p.escuro, "--color-surface-elevated")).toBeCloseTo(5.55, 2);
+    expect(foco(p.escuro, "--color-bg")).toBeCloseTo(5.52, 2);
+    expect(foco(p.escuro, "--color-surface-elevated")).toBeCloseTo(4.2, 2);
     // No escuro o anel NÃO fica apertado contra as bases: quem aperta é o
     // `-soft` COMPOSTO. Estes são os dois pares mais apertados do tema escuro.
-    expect(foco(p.escuro, "--color-accent-soft@--color-surface")).toBeCloseTo(4.86, 2);
-    expect(foco(p.escuro, "--color-accent-soft@--color-surface-elevated")).toBeCloseTo(4.26, 2);
+    expect(foco(p.escuro, "--color-accent-soft@--color-surface")).toBeCloseTo(3.86, 2);
+    expect(foco(p.escuro, "--color-accent-soft@--color-surface-elevated")).toBeCloseTo(3.33, 2);
   });
 
   it("sem marca configurada nada é injetado, e a tela fica como está", () => {

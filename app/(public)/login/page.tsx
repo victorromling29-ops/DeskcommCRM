@@ -1,7 +1,7 @@
 import Link from "next/link";
 
 import { LoginForm } from "@/components/auth/LoginForm";
-import { branding } from "@/lib/branding";
+import { marcaDaSaida } from "@/lib/branding/saida";
 import { createClient } from "@/lib/supabase/server";
 import { normalizarIdioma } from "@/lib/i18n/idiomas";
 import { traduzir } from "@/lib/i18n/dicionario";
@@ -14,6 +14,7 @@ export default async function LoginPage({
   searchParams: Promise<{ next?: string; reset?: string; error?: string }>;
 }) {
   const { next, reset, error } = await searchParams;
+  const marca = await marcaDaSaida(null);
   // Fora da árvore de `app/app/layout.tsx` — sem `IdiomaProvider` do lado do
   // servidor (o cliente já tem o seu, montado em `app/(public)/layout.tsx`).
   // Quase nunca há sessão aqui (é a própria tela de entrar), mas resolve do
@@ -26,15 +27,15 @@ export default async function LoginPage({
   const t = (texto: string) => traduzir(texto, idioma);
 
   return (
-    <div className="space-y-7 text-white">
+    <div className="space-y-7 text-text">
       <div className="space-y-2">
-        <p className="font-mono text-[11px] tracking-[0.22em] text-sky-300 uppercase">
-          {branding().name}
+        <p className="font-mono text-[11px] tracking-[0.22em] text-text-muted uppercase">
+          {marca.nome}
         </p>
         <h1 className="text-3xl font-bold tracking-[-0.035em] sm:text-4xl">
           {t("Bem-vindo de volta")}
         </h1>
-        <p className="max-w-sm text-sm leading-6 text-slate-300">
+        <p className="max-w-sm text-sm leading-6 text-text-muted">
           {t("Entre para acompanhar conversas, oportunidades e próximos passos.")}
         </p>
       </div>
@@ -98,16 +99,16 @@ export default async function LoginPage({
         <p>
           <Link
             href="/login/forgot"
-            className="text-slate-300 underline decoration-white/20 underline-offset-4 transition-colors hover:text-white"
+            className="text-text-muted underline decoration-border-strong underline-offset-4 transition-colors hover:text-text"
           >
             {t("Esqueci minha senha")}
           </Link>
         </p>
-        <p className="text-slate-400">
+        <p className="text-text-muted">
           {t("Não tem conta?")}{" "}
           <Link
             href="/signup"
-            className="font-bold text-sky-300 underline decoration-sky-400/30 underline-offset-4 transition-colors hover:text-sky-200"
+            className="font-bold text-text-muted underline decoration-border-strong underline-offset-4 transition-colors hover:text-text"
           >
             {t("Criar conta")}
           </Link>
