@@ -25,56 +25,56 @@
 @custom-variant dark (&:where([data-theme="dark"], [data-theme="dark"] *));
 
 /* ─────────────────────────────────────────────────────────────────────────
-   AllBusiness — Design System tokens (Steel Blue · density Aerada)
-   Source of truth: /app/design/lib/tokens.ts (PALETTES.allbusiness)
+   Design System tokens (Graphite · density Aerada)
+   Base neutra da plataforma; cores de marca resolvidas em runtime.
    Light + dark drawn separately (NOT inverted).
    ───────────────────────────────────────────────────────────────────────── */
 
 :root {
   /* Surfaces (light) */
-  --color-bg: #f4f7fb;
-  --color-surface: #ffffff;
-  --color-surface-elevated: #eaf1f8;
+  --color-bg: #efefec;
+  --color-surface: #f8f8f5;
+  --color-surface-elevated: #e4e6e0;
   --color-overlay: rgba(8, 20, 38, 0.48);
 
   /* Text (light) */
-  --color-text: #0f1f33;
-  --color-text-muted: #4b6077;
-  --color-text-subtle: #6f8297;
+  --color-text: #242625;
+  --color-text-muted: #656964;
+  --color-text-subtle: #747971;
 
   /* Borders (light) */
-  --color-border: #d7e0ea;
-  --color-border-strong: #b9c7d6;
+  --color-border: #d4d6d0;
+  --color-border-strong: #b5b9b0;
 
-  /* Accent — AllBusiness blue (11 stops) */
-  --color-accent-50:  #edf6fe;
-  --color-accent-100: #d8ecfe;
-  --color-accent-200: #b1d7fa;
-  --color-accent-300: #7ebbf0;
-  --color-accent-400: #49a0e5;
-  --color-accent-500: #1c88d1;
-  --color-accent-600: #076eae;
-  --color-accent-700: #145888;
-  --color-accent-800: #17486d;
-  --color-accent-900: #183d5a;
-  --color-accent-950: #091e2f;
+  /* Accent — graphite olive (11 stops) */
+  --color-accent-50:  #f4f6f2;
+  --color-accent-100: #e5e9e2;
+  --color-accent-200: #cad2c5;
+  --color-accent-300: #a7b39f;
+  --color-accent-400: #86977d;
+  --color-accent-500: #6c7e62;
+  --color-accent-600: #53624a;
+  --color-accent-700: #444f3d;
+  --color-accent-800: #384133;
+  --color-accent-900: #31382d;
+  --color-accent-950: #1a1e17;
   --color-accent: var(--color-accent-600);
-  --color-accent-fg: #ffffff;
+  --color-accent-fg: #f8f8f5;
   --color-accent-soft: var(--color-accent-100);
   --color-accent-hover: var(--color-accent-700);
 
-  /* Neutrals — cool gray (11 stops, light) */
-  --color-neutral-50:  #f4f7fb;
-  --color-neutral-100: #eaf0f6;
-  --color-neutral-200: #d7e0ea;
-  --color-neutral-300: #b9c7d6;
-  --color-neutral-400: #91a2b5;
-  --color-neutral-500: #6f8297;
-  --color-neutral-600: #4b6077;
-  --color-neutral-700: #34495f;
-  --color-neutral-800: #223449;
-  --color-neutral-900: #0f1f33;
-  --color-neutral-950: #07111f;
+  /* Neutrals — soft gray (11 stops, light) */
+  --color-neutral-50:  #efefec;
+  --color-neutral-100: #e4e6e0;
+  --color-neutral-200: #d4d6d0;
+  --color-neutral-300: #b5b9b0;
+  --color-neutral-400: #a5a9a0;
+  --color-neutral-500: #747971;
+  --color-neutral-600: #656964;
+  --color-neutral-700: #484e46;
+  --color-neutral-800: #30342f;
+  --color-neutral-900: #242625;
+  --color-neutral-950: #191c19;
 
   /* States (light) */
   --color-success: #5a8a5f;
@@ -158,7 +158,7 @@
   --muted-foreground: var(--color-text-muted);
   --accent-foreground: var(--color-accent-fg);
   --destructive: var(--color-error);
-  --destructive-foreground: #ffffff;
+  --destructive-foreground: #f8f8f5;
   --border: var(--color-border);
   --input: var(--color-border);
   --ring: var(--color-accent-500);
@@ -245,36 +245,36 @@
    rampa do `<html>` (a do revendedor) em vez de fixar a paleta do produto. Pelo mesmo
    motivo os papéis abaixo mantêm a forma `var(--color-accent-NNN)`.
 
-   Buraco conhecido: `--color-accent-fg` é literal `#ffffff` e, numa subárvore
+   Buraco conhecido: `--color-accent-fg` é literal `#f8f8f5` e, numa subárvore
    clara sob página escura, ficaria preso ao branco mesmo quando a marca exige
    preto. Fechar isso pede um bloco de escopo claro no CSS injetado
    (lib/branding/css.ts), que só ganha consumidor com a tela de marca.
    ───────────────────────────────────────────────────────────────────────── */
 [data-theme="light"] {
-  --color-bg: #f4f7fb;
-  --color-surface: #ffffff;
-  --color-surface-elevated: #eaf1f8;
+  --color-bg: #efefec;
+  --color-surface: #f8f8f5;
+  --color-surface-elevated: #e4e6e0;
   --color-overlay: rgba(8, 20, 38, 0.48);
-  --color-text: #0f1f33;
-  --color-text-muted: #4b6077;
-  --color-text-subtle: #6f8297;
-  --color-border: #d7e0ea;
-  --color-border-strong: #b9c7d6;
+  --color-text: #242625;
+  --color-text-muted: #656964;
+  --color-text-subtle: #747971;
+  --color-border: #d4d6d0;
+  --color-border-strong: #b5b9b0;
   --color-accent: var(--color-accent-600);
-  --color-accent-fg: #ffffff;
+  --color-accent-fg: #f8f8f5;
   --color-accent-soft: var(--color-accent-100);
   --color-accent-hover: var(--color-accent-700);
-  --color-neutral-50: #f4f7fb;
-  --color-neutral-100: #eaf0f6;
-  --color-neutral-200: #d7e0ea;
-  --color-neutral-300: #b9c7d6;
-  --color-neutral-400: #91a2b5;
-  --color-neutral-500: #6f8297;
-  --color-neutral-600: #4b6077;
-  --color-neutral-700: #34495f;
-  --color-neutral-800: #223449;
-  --color-neutral-900: #0f1f33;
-  --color-neutral-950: #07111f;
+  --color-neutral-50: #efefec;
+  --color-neutral-100: #e4e6e0;
+  --color-neutral-200: #d4d6d0;
+  --color-neutral-300: #b5b9b0;
+  --color-neutral-400: #a5a9a0;
+  --color-neutral-500: #747971;
+  --color-neutral-600: #656964;
+  --color-neutral-700: #484e46;
+  --color-neutral-800: #30342f;
+  --color-neutral-900: #242625;
+  --color-neutral-950: #191c19;
   --color-success: #5a8a5f;
   --color-success-bg: rgba(90, 138, 95, 0.12);
   --color-success-fg: #41673f;
@@ -306,7 +306,7 @@
   --muted-foreground: var(--color-text-muted);
   --accent-foreground: var(--color-accent-fg);
   --destructive: var(--color-error);
-  --destructive-foreground: #ffffff;
+  --destructive-foreground: #f8f8f5;
   --border: var(--color-border);
   --input: var(--color-border);
   --ring: var(--color-accent-500);
@@ -329,49 +329,49 @@
 
 [data-theme="dark"] {
   /* Surfaces (dark — drawn) */
-  --color-bg: #07111f;
-  --color-surface: #0d1928;
-  --color-surface-elevated: #152438;
+  --color-bg: #191c19;
+  --color-surface: #222622;
+  --color-surface-elevated: #2d322c;
   --color-overlay: rgba(0, 0, 0, 0.55);
 
   /* Text (dark) */
-  --color-text: #f2f7fc;
-  --color-text-muted: #9bacc0;
-  --color-text-subtle: #64778e;
+  --color-text: #f0f1ed;
+  --color-text-muted: #b2b8ac;
+  --color-text-subtle: #8b9484;
 
   /* Borders (dark) */
-  --color-border: #22354a;
-  --color-border-strong: #34506c;
+  --color-border: #3b4338;
+  --color-border-strong: #515d4b;
 
   /* Accent stays same hex stops; default shifts up for dark contrast */
-  --color-accent-50:  #edf6fe;
-  --color-accent-100: #d8ecfe;
-  --color-accent-200: #b1d7fa;
-  --color-accent-300: #7ebbf0;
-  --color-accent-400: #49a0e5;
-  --color-accent-500: #1c88d1;
-  --color-accent-600: #076eae;
-  --color-accent-700: #145888;
-  --color-accent-800: #17486d;
-  --color-accent-900: #183d5a;
-  --color-accent-950: #091e2f;
+  --color-accent-50:  #f4f6f2;
+  --color-accent-100: #e5e9e2;
+  --color-accent-200: #cad2c5;
+  --color-accent-300: #a7b39f;
+  --color-accent-400: #86977d;
+  --color-accent-500: #6c7e62;
+  --color-accent-600: #53624a;
+  --color-accent-700: #444f3d;
+  --color-accent-800: #384133;
+  --color-accent-900: #31382d;
+  --color-accent-950: #1a1e17;
   --color-accent: var(--color-accent-400);
-  --color-accent-fg: #07111f;
-  --color-accent-soft: rgba(73, 160, 229, 0.16);
+  --color-accent-fg: #191c19;
+  --color-accent-soft: rgba(134, 151, 125, 0.16);
   --color-accent-hover: var(--color-accent-300);
 
-  /* Neutrals — cool gray (11 stops, dark) */
-  --color-neutral-50:  #f2f7fc;
-  --color-neutral-100: #dbe6f1;
-  --color-neutral-200: #b5c5d6;
-  --color-neutral-300: #9bacc0;
-  --color-neutral-400: #64778e;
-  --color-neutral-500: #42566d;
-  --color-neutral-600: #2d4055;
-  --color-neutral-700: #152438;
-  --color-neutral-800: #0d1928;
-  --color-neutral-900: #07111f;
-  --color-neutral-950: #030914;
+  /* Neutrals — soft gray (11 stops, dark) */
+  --color-neutral-50:  #f0f1ed;
+  --color-neutral-100: #dce0d6;
+  --color-neutral-200: #c5cdbd;
+  --color-neutral-300: #b2b8ac;
+  --color-neutral-400: #8b9484;
+  --color-neutral-500: #626e59;
+  --color-neutral-600: #47533f;
+  --color-neutral-700: #2d322c;
+  --color-neutral-800: #222622;
+  --color-neutral-900: #191c19;
+  --color-neutral-950: #111410;
 
   /* States (dark) */
   --color-success: #82a077;
@@ -409,7 +409,7 @@
   --muted-foreground: var(--color-text-muted);
   --accent-foreground: var(--color-accent-fg);
   --destructive: var(--color-error);
-  --destructive-foreground: #ffffff;
+  --destructive-foreground: #f8f8f5;
   --border: var(--color-border);
   --input: var(--color-border);
   --ring: var(--color-accent-400);
@@ -464,7 +464,7 @@
   --color-text-muted: var(--color-text-muted);
   --color-text-subtle: var(--color-text-subtle);
 
-  /* Accent — AllBusiness blue */
+  /* Accent — graphite olive */
   --color-accent: var(--color-accent);
   --color-accent-foreground: var(--color-accent-fg);
   --color-accent-soft: var(--color-accent-soft);
@@ -481,7 +481,7 @@
   --color-accent-900: var(--color-accent-900);
   --color-accent-950: var(--color-accent-950);
 
-  /* Neutrals — cool gray */
+  /* Neutrals — soft gray */
   --color-neutral-50: var(--color-neutral-50);
   --color-neutral-100: var(--color-neutral-100);
   --color-neutral-200: var(--color-neutral-200);
@@ -524,7 +524,7 @@
   --color-secondary: var(--color-surface-elevated);
   --color-secondary-foreground: var(--color-text);
   --color-destructive: var(--color-error);
-  --color-destructive-foreground: #ffffff;
+  --color-destructive-foreground: #f8f8f5;
   --color-muted: var(--color-surface-elevated);
   --color-muted-foreground: var(--color-text-muted);
   --color-popover: var(--color-surface);
@@ -868,151 +868,6 @@
        Ele dura os PULSE_MS inteiros (useBoard.ts), NÃO os 320ms da animação:
        a diferença entre os dois números é deliberada e está explicada lá. */
     border-color: var(--color-accent);
-  }
-}
-
-/* ---- Fachada AllBusiness · a conversa percorre o funil ------------------- */
-@keyframes allbusiness-auth-enter {
-  from {
-    opacity: 0;
-    transform: translateY(14px);
-  }
-  to {
-    opacity: 1;
-    transform: translateY(0);
-  }
-}
-
-@keyframes allbusiness-auth-flow {
-  0% {
-    left: 0;
-    opacity: 0;
-  }
-  12% {
-    opacity: 1;
-  }
-  88% {
-    opacity: 1;
-  }
-  100% {
-    left: calc(100% - 10px);
-    opacity: 0;
-  }
-}
-
-@keyframes allbusiness-auth-orbit {
-  0%,
-  100% {
-    transform: translate3d(0, 0, 0) scale(1);
-  }
-  50% {
-    transform: translate3d(22px, -18px, 0) scale(1.08);
-  }
-}
-
-.allbusiness-auth-grid {
-  position: absolute;
-  inset: 0;
-  opacity: 0.18;
-  background-image:
-    linear-gradient(rgba(56, 189, 248, 0.08) 1px, transparent 1px),
-    linear-gradient(90deg, rgba(56, 189, 248, 0.08) 1px, transparent 1px);
-  background-size: 56px 56px;
-  mask-image: radial-gradient(circle at 28% 48%, black, transparent 68%);
-}
-
-.allbusiness-auth-orb {
-  position: absolute;
-  border-radius: 999px;
-  filter: blur(2px);
-  animation: allbusiness-auth-orbit 12s ease-in-out infinite;
-}
-
-.allbusiness-auth-orb-one {
-  top: -12rem;
-  left: 8%;
-  width: 34rem;
-  height: 34rem;
-  background: radial-gradient(circle, rgba(2, 132, 199, 0.2), transparent 68%);
-}
-
-.allbusiness-auth-orb-two {
-  right: -14rem;
-  bottom: -16rem;
-  width: 36rem;
-  height: 36rem;
-  background: radial-gradient(circle, rgba(14, 165, 233, 0.13), transparent 70%);
-  animation-delay: -6s;
-}
-
-.allbusiness-auth-enter {
-  opacity: 0;
-  animation: allbusiness-auth-enter 0.7s cubic-bezier(0.2, 0.8, 0.2, 1) forwards;
-}
-
-.allbusiness-auth-enter-one {
-  animation-delay: 0.05s;
-}
-.allbusiness-auth-enter-two {
-  animation-delay: 0.14s;
-}
-.allbusiness-auth-enter-three {
-  animation-delay: 0.23s;
-}
-.allbusiness-auth-enter-four {
-  animation-delay: 0.32s;
-}
-.allbusiness-auth-enter-five {
-  animation-delay: 0.41s;
-}
-
-.allbusiness-auth-flow::before {
-  content: "";
-  position: absolute;
-  top: 2px;
-  left: 0;
-  right: 0;
-  height: 1px;
-  background: linear-gradient(90deg, rgba(56, 189, 248, 0.65), rgba(56, 189, 248, 0.08));
-}
-
-.allbusiness-auth-flow-step::before {
-  content: "";
-  position: absolute;
-  top: -2px;
-  left: 0;
-  width: 9px;
-  height: 9px;
-  border: 2px solid #38bdf8;
-  border-radius: 999px;
-  background: #040914;
-  box-shadow: 0 0 0 5px rgba(56, 189, 248, 0.08);
-}
-
-.allbusiness-auth-flow-pulse {
-  position: absolute;
-  top: -3px;
-  left: 0;
-  width: 10px;
-  height: 10px;
-  border-radius: 999px;
-  background: #e0f2fe;
-  box-shadow: 0 0 18px 5px rgba(56, 189, 248, 0.75);
-  animation: allbusiness-auth-flow 4.8s ease-in-out infinite 1.2s;
-}
-
-@media (prefers-reduced-motion: reduce) {
-  .allbusiness-auth-enter {
-    opacity: 1;
-    animation: none;
-    transform: none;
-  }
-  .allbusiness-auth-orb,
-  .allbusiness-auth-flow-pulse {
-    animation: none;
-  }
-  .allbusiness-auth-flow-pulse {
-    display: none;
   }
 }
 

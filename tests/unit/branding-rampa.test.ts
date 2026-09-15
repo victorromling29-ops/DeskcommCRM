@@ -110,11 +110,11 @@ describe("rampaDeSemente — catraca de calibração contra o design system", ()
     // por não ter o que comparar — instrumento morto tem cara de teste verde.
     expect(esperados).toHaveLength(11);
     expect(new Set(esperados).size).toBe(11);
-    expect(esperados[K]).toBe("#076eae");
+    expect(esperados[K]).toBe("#53624a");
   });
 
-  it("reproduz os 11 stops AllBusiness a partir de #076eae com Δ ≤ 2/255 por canal", () => {
-    const derivada = rampaDeSemente("#076eae");
+  it("reproduz os 11 stops da plataforma a partir de #53624a com Δ ≤ 2/255 por canal", () => {
+    const derivada = rampaDeSemente("#53624a");
     const distancias = esperados.map((esperado, i) => distanciaPorCanal(esperado, derivada[i]!));
     expect(
       Math.max(...distancias),

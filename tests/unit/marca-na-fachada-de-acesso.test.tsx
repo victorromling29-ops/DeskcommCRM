@@ -65,8 +65,8 @@ describe("a casca das telas de acesso", () => {
     expect(html).toContain('src="https://cdn.exemplo.test/revenda.png"');
     // Legendado com a marca DESTA resolução: é ela que produziu a imagem.
     expect(html).toContain('alt="Vendas Turbo"');
-    expect(html).toContain('aria-label="Fluxo de atendimento da plataforma"');
-    expect(html).toContain("Cada conversa já nasce com um próximo passo.");
+    expect(html).toContain('aria-label="Recursos do seu espaço de trabalho"');
+    expect(html).toContain("Boas conversas.");
     // Guarda de vacuidade: sem o conteúdo, a asserção de cima poderia estar
     // medindo uma casca que engoliu o formulário de login.
     expect(html).toContain("formulário");
@@ -79,7 +79,7 @@ describe("a casca das telas de acesso", () => {
     // de imagem quebrada no topo do login. É o estado de fábrica de TODA
     // instalação nova, então o caminho normal não pode ter esse defeito.
     expect(html).not.toContain("<img");
-    expect(html).toContain("Acesso protegido à sua operação");
+    expect(html).toContain("Sua conta. Sua equipe. Seu espaço.");
     expect(html).toContain("formulário");
   });
 

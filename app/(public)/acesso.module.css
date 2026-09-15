@@ -1,0 +1,160 @@
+.shell {
+  color-scheme: light;
+  min-height: 100svh;
+  background: #efefec;
+  color: #242625;
+}
+.layout {
+  min-height: 100svh;
+  max-width: 1600px;
+  margin: auto;
+  display: grid;
+  grid-template-columns: 1.12fr 1fr;
+}
+.intro {
+  padding: clamp(40px, 5vw, 80px);
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  gap: 64px;
+}
+.brand {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 16px;
+  animation: arrive 650ms ease-out both;
+}
+.logo {
+  width: 290px;
+  height: 96px;
+  max-width: 100%;
+  object-fit: contain;
+  object-position: left center;
+}
+.caption,
+.eyebrow {
+  color: #656964;
+  font-size: 11px;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+}
+.caption {
+  padding-left: 4px;
+}
+.story {
+  padding: 32px 0;
+  animation: arrive 750ms 100ms ease-out both;
+}
+.headline {
+  font-family: var(--font-atkinson), sans-serif;
+  font-size: clamp(40px, 4.1vw, 64px);
+  line-height: 1.08;
+  letter-spacing: -0.055em;
+  font-weight: 700;
+  margin-top: 24px;
+}
+.headline span {
+  color: #747971;
+}
+.description {
+  max-width: 420px;
+  color: #656964;
+  font-size: 17px;
+  line-height: 1.8;
+  margin-top: 28px;
+}
+.workspace {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 22px;
+  border-top: 1px solid #d4d6d0;
+  padding-top: 22px;
+  margin-top: 42px;
+  font-size: 13px;
+  color: #656964;
+}
+.workspace span + span::before {
+  content: "/";
+  margin-right: 22px;
+  color: #a5a9a0;
+}
+.footer {
+  font-size: 12px;
+  color: #747971;
+}
+.access {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 48px;
+  background: #e4e6e0;
+  position: relative;
+}
+.card {
+  width: 100%;
+  max-width: 450px;
+  padding: 44px;
+  background: #f8f8f5;
+  border: 1px solid #d4d6d0;
+  border-radius: 24px;
+  box-shadow: 0 20px 70px -38px #42483f55;
+  animation: arrive 750ms 180ms ease-out both;
+}
+.security {
+  margin-top: 26px;
+  color: #656964;
+  font-size: 12px;
+}
+@keyframes arrive {
+  from {
+    opacity: 0;
+    transform: translateY(12px);
+  }
+  to {
+    opacity: 1;
+    transform: none;
+  }
+}
+@media (max-width: 1023px) {
+  .layout {
+    grid-template-columns: 1fr;
+  }
+  .intro {
+    padding: 36px 24px 24px;
+    gap: 0;
+  }
+  .brand {
+    align-items: center;
+  }
+  .logo {
+    width: 240px;
+    height: 80px;
+    object-position: center;
+  }
+  .story,
+  .footer {
+    display: none;
+  }
+  .access {
+    background: transparent;
+    padding: 16px 20px 40px;
+    justify-content: flex-start;
+  }
+  .card {
+    padding: 32px;
+  }
+}
+@media (max-width: 390px) {
+  .card {
+    padding: 26px 22px;
+  }
+}
+@media (prefers-reduced-motion: reduce) {
+  .brand,
+  .story,
+  .card {
+    animation: none;
+  }
+}
